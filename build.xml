@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="Mettl-GoogleDrive" basedir=".">
+<property name="classes.dir" value="${basedir}\bin" />
+	<property name="src.dir" value="${basedir}\src" />
+	<property name="jar.dir" value="${basedir}\libs" />
+    <path id="libs">
+    	<pathelement path="${basedir}\bin" />
+        <pathelement path="${basedir}\libs\selenium-server-standalone-2.53.1.jar"/>
+            	
+
+    </path>
+    <taskdef resource="net/sf/antcontrib/antlib.xml">
+				<classpath>
+					<pathelement location="${basedir}\Libraries\ant-contrib-1.0b3.jar" />
+				</classpath>
+			</taskdef>
+	<target name="runtests">
+				<property name="prop" value="${executeTargets}" />
+				<for list="${prop}" param="letter">
+					<sequential>
+						<antcall target="@{letter}" />
+					</sequential>
+				</for>
+			</target>
+	<target name="init">
+			<echo>Initializing...</echo>
+			<delete dir="${classes.dir}" />
+			<mkdir dir="${classes.dir}" />
+		</target>
+
+		<!-- Complies the java files -->
+		<target name="compile" depends="init">
+			<echo>Compiling...</echo>
+			<javac debug="true" srcdir="${src.dir}" destdir="${classes.dir}" classpathref="libs" />
+		</target>
+	<target name="Google" description="Download files from google drive">
+				<echo>Running ...</echo>
+				<java classname="testdownload.sampleclass" classpathref="libs">
+				</java>
+			</target>
+</project>
